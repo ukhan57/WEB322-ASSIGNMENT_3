@@ -4,7 +4,7 @@ const app = express();
 // const multer = require("multer");
 const path = require("path");
 const bodyParser = require("body-parser");
-const exphbs = require("express-handlebars");
+const handlebars = require("express-handlebars");
 const { brotliDecompressSync } = require("zlib");
 
 const HTTP_PORT = process.env.PORT || 8080;
@@ -15,7 +15,7 @@ function onHttpStart() {
 }
 
 // Register handlebars as the rendering engine for views
-app.engine(".hbs", exphbs.engine({ extname: ".hbs" }));
+app.engine(".hbs", handlebars.engine({ extname: ".hbs" }));
 app.set("view engine", ".hbs");
 
 app.use(bodyParser.urlencoded({ extended: true}));
@@ -75,7 +75,7 @@ app.post("registration", function(req,res){
         confirmpassword: req.body.confirmpassword,
     }
 
-    checkpass = () => {
+    checkpass = function() {
         if (userdata.password == userdata.confirmpassword) {
             return true;
         }
